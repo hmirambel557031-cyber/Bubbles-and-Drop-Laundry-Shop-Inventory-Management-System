@@ -16,7 +16,9 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        $loginRole = session('login_role', 'staff');
+
+        return view('auth.login', compact('loginRole'));
     }
 
     /**
@@ -27,8 +29,10 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+        $selectedRole = $request->input('login_role', session('login_role', 'staff'));
+        $request->session()->forget('login_role');
 
-        if ($request->user()->role === 'admin') {
+        if ($request->user()->role === 'admin' || $selectedRole === 'admin') {
             return redirect()->route('admin.dashboard');
         }
 

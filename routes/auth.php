@@ -17,6 +17,18 @@ Route::middleware('guest')->group(function () {
 
     Route::post('register', [RegisteredUserController::class, 'store']);
 
+    Route::get('login/staff', function () {
+        session(['login_role' => 'staff']);
+
+        return redirect()->route('login');
+    })->name('login.staff');
+
+    Route::get('login/admin', function () {
+        session(['login_role' => 'admin']);
+
+        return redirect()->route('login');
+    })->name('login.admin');
+
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');
 

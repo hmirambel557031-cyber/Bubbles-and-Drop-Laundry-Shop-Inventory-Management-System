@@ -11,6 +11,7 @@ class InventoryItem extends Model
         'item_name',
         'category',
         'quantity',
+        'max_capacity',
         'reorder_level',
         'unit',
     ];
